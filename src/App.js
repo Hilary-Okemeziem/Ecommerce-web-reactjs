@@ -5,7 +5,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import ProductPage from "./components/ProductPage";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import ShopPage from "./components/ShopPage";
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
         <Route path='/products/:productId' element={<ProductPage/>}/>
         <Route path='/shoppage' element={<ShopPage/>}/>
       </Routes> 
-      <Footer/> 
+      {/* <Footer/> */}
     </ThemeProvider>
   );
 }

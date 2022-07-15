@@ -25,7 +25,7 @@ const ProductPage = (rowID) => {
 
     const Loading = () => {
         return (
-            <div className='flex items-center justify-center w-full h-screen'>
+            <div className='flex items-center justify-center'>
                 <FadeLoader color={'#986c55'} loading={loading} size={150} />
                 <p className='text-2xl '>Loading Products...</p>
             </div>
@@ -34,8 +34,8 @@ const ProductPage = (rowID) => {
 
     const ShowProduct = () => {
         return (
-            <div className='py-12 lg:h-screen'>
-               <div className='grid lg:grid-cols-2 gap-8 shadow-md shadow-gray-300 bg-[#f5f5f5] dark:shadow-black dark:bg-[#0e0e10] rounded-xl p-4 my-8'>
+            <div>
+               <div className='grid lg:grid-cols-2 gap-8 shadow-md shadow-gray-300 bg-[#f5f5f5] dark:shadow-black dark:bg-[#0e0e10] rounded-xl p-4'>
                     <div>
                         <div className='flex items-center justify-center'>
                             <img src={product.images?.[0]} width={270} alt={product._id} className='rounded-lg hover:scale-105 ease-in duration-300' />
@@ -79,15 +79,16 @@ const ProductPage = (rowID) => {
                             <p>{product.description}</p>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
+            
         )
     }
 
 
   return (
-    <div className='pt-[5rem]' >
-        <div className='max-w-[1240px] m-auto'>
+    <div className='max-w-[1240px] m-auto' >
+        <div className='pt-[5rem] w-full p-2'>
             <div>{loading ? <Loading/> : <ShowProduct/>}</div>
         </div>
     </div>

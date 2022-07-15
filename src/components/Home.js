@@ -9,6 +9,7 @@ import FashionInspo from '../layout/FashionInspo'
 import Brands from '../layout/Brands'
 import Banner from '../layout/Banner'
 import Blog from '../layout/Blog'
+import Footer from './Footer'
 
 
 const Home = ({rowID}) => {
@@ -70,6 +71,7 @@ const Home = ({rowID}) => {
         <div className='pt-5 max-w-[1240px] m-auto'>
             <Blog/>
         </div>
+        <Footer/>
 
     </div>
   )

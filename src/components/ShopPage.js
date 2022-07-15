@@ -7,9 +7,12 @@ import TodayDeals from '../shopLayout/TodayDeals'
 import TopDeals from '../shopLayout/TopDeals'
 import TopDiscount from '../shopLayout/TopDiscount'
 import Brands from '../layout/Brands'
+import Footer from './Footer'
 
 const ShopPage = () => {
   return (
+    <div>
+
     <div className='max-w-[1240px] m-auto pt-5'>
         <div className='w-full py-16 p-2'>
             <div className='w-full bg-[#986c55] p-8'>
@@ -27,6 +30,8 @@ const ShopPage = () => {
                 <InspiredByCart rowID='10'/>
             </div>
         </div>
+    </div>
+    <Footer/>
     </div>
   )
 }
