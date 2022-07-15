@@ -1,13 +1,50 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800;900&display=swap');
+
+@layer base{
+  body{
+    @apply font-[Montserrat];
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  @apply bg-primary text-primary
 }
+
+.light {
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #edf2f7;
+  --color-text-primary: #2d3748;
+  --color-text-secondary: #4a5568;
+  --color-text-accent: #2b6cb0;
+  --color-bg-input: #edf2f7;
+  --color-bg-button: #644726;
+}
+
+.dark {
+  --color-bg-primary: #121212;
+  --color-bg-secondary: #283141;
+  --color-text-primary: #dbdbdb;
+  --color-text-secondary: #e2e8f0;
+  --color-text-accent: #81e6d9;
+  --color-bg-input: #4a5361;
+  --color-bg-button: #644726;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("./images/hero2.png");
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 80vh;
+}
+
+
+
+
