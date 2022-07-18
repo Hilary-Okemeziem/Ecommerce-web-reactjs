@@ -45,6 +45,44 @@
   height: 80vh;
 }
 
+.heading:after{
+  width: 60px;
+  height: 5px;
+  background-color: #986c55;
+  display: block;
+  margin: auto;
+  margin-top: 0.5rem;
+  content: "";
+}
+
+.banner{
+  background-attachment: fixed;
+  background-position: top 70px center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('./images/beach.png');
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 60vh;
+}
+
+.banner2{
+  background-attachment: fixed;
+  background-position: top 70px center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('./images/festival.png');
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 60vh;
+}
+
 
 
 

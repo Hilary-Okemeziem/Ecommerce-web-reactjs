@@ -14,7 +14,7 @@ const Category = () => {
   return (
     <div className='w-full py-16 p-2'>
         <div className='flex items-center justify-center pt-8'>
-            <h1 className='text-center text-[#644726] text-3xl tracking-widest font-bold inline border-b-4 border-[#644726]'>Shop By Category</h1>
+            <h1 className='text-[#644726] text-3xl font-bold heading'>Shop By Category</h1>
         </div>
 
         <div className='pt-8'>

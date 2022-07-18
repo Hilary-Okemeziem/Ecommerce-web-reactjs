@@ -3,11 +3,39 @@ import {useParams} from 'react-router-dom'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import FadeLoader from "react-spinners/FadeLoader";
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../slices/cartSlice';
+// import { addItem, delItem } from '../redux/action/index';
+// import { actionType } from '../redux/reducer/handleCart';
 
 const ProductPage = (rowID) => {
     const [product, setProduct] = useState([])
     const {productId} = useParams()
     const [loading, setLoading] = useState(false);
+    // const [cartBtn, setCartBtn] = useState('Add to Cart');
+
+    // const dispatch = useDispatch();
+        
+    // const addCart = (product) => {
+    //     if (cartBtn === 'Add to Cart'){
+    //         dispatch({
+    //             type : actionType.SET_CARTITEMS,
+    //             cartItems: [...product]
+    //         })
+    //         dispatch(addItem(product));
+    //         setCartBtn('Remove from Cart')
+    //     } else{
+    //         dispatch(delItem(product));
+    //         setCartBtn('Add to Cart')
+    //     }
+
+    // }
+
+    const dispatch = useDispatch()
+
+    const handleAddToCart = (product) => {
+        dispatch(addToCart(product))
+    }
 
     const url =  `https://thegorana.herokuapp.com/products/${productId}`
   
@@ -35,18 +63,18 @@ const ProductPage = (rowID) => {
     const ShowProduct = () => {
         return (
             <div>
-               <div className='grid lg:grid-cols-2 gap-8 shadow-md shadow-gray-300 bg-[#f5f5f5] dark:shadow-black dark:bg-[#0e0e10] rounded-xl p-4'>
+               <div className='grid lg:grid-cols-2 gap-8 p-4'>
                     <div>
                         <div className='flex items-center justify-center'>
-                            <img src={product.images?.[0]} width={270} alt={product._id} className='rounded-lg hover:scale-105 ease-in duration-300' />
+                            <img src={product.images?.[0]} alt={product._id} width={300} id='mainImg' className='rounded-md hover:scale-105 ease-in duration-300 max-w-full h-auto' />
                         </div>
 
                         <div id={'slider' + rowID} className='w-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative'>
-                            <div className='flex items-center justify-between h-full w-full px-4 py-4 relative'>
-                                <img src={product.images?.[1]} width={150} alt={product._id} className='rounded-lg px-1 hover:scale-105 ease-in duration-300'  />
-                                <img src={product.images?.[2]} width={150} alt={product._id} className='rounded-lg px-1 hover:scale-105 ease-in duration-300'  />
-                                <img src={product.images?.[3]} width={150} alt={product._id} className='rounded-lg px-1 hover:scale-105 ease-in duration-300'  />
-                                <img src={product.images?.[4]} width={150} alt={product._id} className='rounded-lg px-1 hover:scale-105 ease-in duration-300'  />  
+                            <div className='flex items-center h-full w-full py-4 relative'>
+                                <img src={product.images?.[1]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />
+                                <img src={product.images?.[2]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />
+                                <img src={product.images?.[3]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />
+                                <img src={product.images?.[4]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />  
                             </div>    
                         </div>
                     </div>
@@ -61,19 +89,24 @@ const ProductPage = (rowID) => {
                         <div className='font-bold text-xl text-black dark:text-white py-5'>
                             {product.currency + " " + product.price?.toLocaleString()}
                         </div>
-                        <div className='py-5'>
-                            <form action="">
-                                <select>
-                                    <option value="grapefruit">S</option>
-                                    <option value="lime">M</option>
-                                    <option selected value="coconut">L</option>
-                                    <option value="mango">XL</option>
-                                </select>
-                            </form>
+                        
+                        <div className='flex items-center'>
+                            <div>
+                                <select className='my-3 border border-[#986c55] p-2 rounded-md '>
+                                    <option>Select Size</option>
+                                    <option>XL</option>
+                                    <option>XXl</option>
+                                    <option>Large</option>
+                                    <option>Medium</option>
+                                    <option>Small</option>
+                                </select>  
+                            </div>
+                            
+                            <div>
+                                <div className='bg-button text-btnText dark:text-white px-5 py-2 rounded-md shadow-md hover:shadow-xl cursor-pointer ml-5' onClick={() => handleAddToCart(product)}>Add to Cart</div>
+                            </div>
                         </div>
-                        <div className='py-5'>
-                            <div className='bg-button text-btnText dark:text-white px-5 py-2 rounded-lg shadow-lg hover:shadow-2xl flex items-center justify-between cursor-pointer'>Add to Cart</div>
-                        </div>
+
                         <div>
                             <h1 className='font-bold text-xl py-4'>Product Detials</h1>
                             <p>{product.description}</p>

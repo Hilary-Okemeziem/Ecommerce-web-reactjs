@@ -6,7 +6,7 @@ const Deals = () => {
   return (
     <div className='w-full py-16 p-2'>
         <div className='flex items-center justify-center'>
-            <h1 className='text-[#986c55] text-3xl md:text-4xl font-bold tracking-widest'>Best Deals Today</h1>
+            <h1 className='text-[#986c55] text-3xl md:text-4xl font-bold tracking-widest heading'>Best Deals Today</h1>
         </div>
         <div className='grid lg:grid-cols-2 gap-8 w-full h-full py-10'>
             <div className='bg-[#A1BEC2] xl:w-[600px] xl:h-[337px] h-auto p-0 xl:p-4'>

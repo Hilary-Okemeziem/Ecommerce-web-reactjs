@@ -4,11 +4,28 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+// import store from './redux/store';
+import { configureStore } from '@reduxjs/toolkit';
+import cartReducer, { getTotals } from './slices/cartSlice';
+import { ThemeProvider } from './context/ThemeContext';
+
+const store = configureStore({
+  reducer:{
+    cart: cartReducer,
+  }
+});
+
+store.dispatch(getTotals());
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
-    <App />
+    <Provider store={store}>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </Provider>
   </BrowserRouter>
 );
 

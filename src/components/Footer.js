@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import logo from '../images/kcl.png'
 import ThemeToggle from './ThemeToggle'
 import { AiOutlineInstagram } from 'react-icons/ai'
-import { FaFacebookF, FaGithub, FaTiktok, FaTwitter } from 'react-icons/fa'
+import { FaFacebookF, FaGithub, FaTwitter } from 'react-icons/fa'
 
 
 const Footer = () => {

@@ -8,15 +8,23 @@ import { FaGithub, FaRegHeart, FaFacebookF, FaTwitter } from 'react-icons/fa';
 import {SiGnuprivacyguard} from 'react-icons/si'
 import {GoSignIn} from 'react-icons/go'
 import logo from '../images/kcl.png'
+import CartPage from './CartPage';
+import { useSelector } from 'react-redux';
 
 
 
 const Navbar = () => {
     const [nav, setNav] = useState(false);
     const [navBg, setNavBg] = useState(false);
+    const [carts, setCarts] = useState(false);
+    const { cartTotalQuantity } = useSelector((state) => state.cart);
 
     const handleNav = () => {
         setNav(!nav);
+    };
+
+    const handleCart = () => {
+        setCarts(!carts);
     };
 
     const changeNavbg = () => {
@@ -135,11 +143,18 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <Link to='/'>
-                    <li className='ml-10 mt-2 hover:font-bold'>
-                        <HiShoppingCart className='inline mb-2' size={22}/>  Cart
+                
+                    <li className='ml-10 mt-2 hover:font-bold cursor-pointer relative' onClick={handleCart}>
+                        <HiShoppingCart className='inline mb-2' size={22} />  Cart
+                        <div className='absolute -top-3 left-4 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'>
+                            <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p>
+                        </div>  
+                        {/* {cartTotalQuantity > 0 ? ( */}
+                            {/* <div className='absolute -top-3 left-4 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'> */}
+                            {/* <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p> */}
+                        {/* </div>  
+                        ): ''} */}
                     </li>
-                </Link>
                 <li className='ml-10 mt-1'>
                     <ThemeToggle/>
                 </li>
@@ -147,13 +162,16 @@ const Navbar = () => {
 
             <div className='flex items-center justify-evenly'>
                 {/* Cart icon */}
-                <div className='md:hidden z-10'>
+                <div className='md:hidden z-9 relative' onClick={handleCart}>
                     <HiShoppingCart size={22}/>
+                    <div className='absolute -top-3 -right-3 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'>
+                        <p className='text-xs text-white font-semibold'>1</p>
+                    </div>
                 </div>
                 {/* Hamburger Icon */}
                 <div
                     onClick={handleNav}
-                    className='md:hidden z-10 ml-3'
+                    className='md:hidden z-9 ml-3'
                 >
                     <AiOutlineMenu size={25}/>
                 </div>
@@ -225,34 +243,38 @@ const Navbar = () => {
                         </p>
 
                         <div className='flex items-center justify-between my-6 w-full sm:w-[80%]'>
-                            <a>
+                            
                                 <div className='rounded-full shadow-md shadow-gray-400 dark:shadow-black p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
                                     <AiOutlineInstagram />
                                 </div>
-                            </a>
+                            
 
-                            <a>
+                            
                                 <div className='rounded-full shadow-md shadow-gray-400 dark:shadow-black p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
                                     <FaTwitter />
                                 </div>
-                            </a>
+                            
 
-                            <a>
+                            
                                 <div className='rounded-full shadow-md shadow-gray-400 dark:shadow-black p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
                                     <FaFacebookF />
                                 </div>
-                            </a>
+                            
 
-                            <a>
+                            
                                 <div className='rounded-full shadow-md shadow-gray-400 dark:shadow-black p-3 cursor-pointer hover:scale-105 ease-in duration-300'>
                                     <FaGithub />
                                 </div>
-                            </a>
+                            
                         </div>
                     </div>    
                 </div>
             </div>
-        </div>    
+        </div>
+
+        <div>
+            {carts ? <CartPage/> : ''}   
+        </div>       
     </div>
   )
 }

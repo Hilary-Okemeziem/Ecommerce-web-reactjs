@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import adidas from '../images/adidas.jpg'
 import defacto from '../images/defacto.png'
 import generation from '../images/generation.jpg'
@@ -25,7 +25,7 @@ const Brands = ({rowID}) => {
   return (
     <div className='w-full py-16 p-2'>
         <div className='flex items-center justify-center'>
-            <h1 className='text-3xl text-[#986c55] tracking-widest font-bold uppercase'>Fashion Brands</h1>
+            <h1 className='text-3xl text-[#986c55] tracking-widest font-bold uppercase heading'>Fashion Brands</h1>
         </div>
 
         <div className='relative flex items-center justify-between group py-8 '>

@@ -1,16 +1,18 @@
 import Navbar from "./components/Navbar";
-import { ThemeProvider } from "./context/ThemeContext";
-import {Routes, Route, Router} from 'react-router-dom'
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
+import {Routes, Route} from 'react-router-dom'
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Home from "./components/Home";
 import ProductPage from "./components/ProductPage";
-// import Footer from "./components/Footer";
 import ShopPage from "./components/ShopPage";
+
 
 function App() {
   return (
-    <ThemeProvider>
+    <>
+      <ToastContainer/>
       <Navbar/>
       <Routes>
         <Route path='/' element={<Home rowID='1'/>}/>
@@ -19,8 +21,7 @@ function App() {
         <Route path='/products/:productId' element={<ProductPage/>}/>
         <Route path='/shoppage' element={<ShopPage/>}/>
       </Routes> 
-      {/* <Footer/> */}
-    </ThemeProvider>
+    </>
   );
 }
 
