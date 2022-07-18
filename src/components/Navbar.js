@@ -165,7 +165,7 @@ const Navbar = () => {
                 <div className='md:hidden z-9 relative' onClick={handleCart}>
                     <HiShoppingCart size={22}/>
                     <div className='absolute -top-3 -right-3 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'>
-                        <p className='text-xs text-white font-semibold'>1</p>
+                        <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p>
                     </div>
                 </div>
                 {/* Hamburger Icon */}

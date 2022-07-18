@@ -12,24 +12,6 @@ const ProductPage = (rowID) => {
     const [product, setProduct] = useState([])
     const {productId} = useParams()
     const [loading, setLoading] = useState(false);
-    // const [cartBtn, setCartBtn] = useState('Add to Cart');
-
-    // const dispatch = useDispatch();
-        
-    // const addCart = (product) => {
-    //     if (cartBtn === 'Add to Cart'){
-    //         dispatch({
-    //             type : actionType.SET_CARTITEMS,
-    //             cartItems: [...product]
-    //         })
-    //         dispatch(addItem(product));
-    //         setCartBtn('Remove from Cart')
-    //     } else{
-    //         dispatch(delItem(product));
-    //         setCartBtn('Add to Cart')
-    //     }
-
-    // }
 
     const dispatch = useDispatch()
 
