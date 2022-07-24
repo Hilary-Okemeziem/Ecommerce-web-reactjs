@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 const Banner = () => {
   return (
     <div className='w-full h-[500px] lg:h-[550px] py-16'>
-        <div className='banner2'>
+        <div className='bg-fixed flex flex-col justify-center items-start w-full h-[60vh] bg-center bg-no-repeat bg-cover banner-img'>
             <div className='flex items-center justify-between flex-wrap md:flex-nowrap max-w-[1240px] m-auto p-2'>
                 <div>
                     <h1 className='text-3xl md:text-4xl lg:text-5xl font-bold text-white'>Festivals x Concerts </h1>

@@ -83,6 +83,10 @@
   height: 60vh;
 }
 
+.banner-img{
+  background-image: url('./images/festival.png');
+}
+
 
 
 
