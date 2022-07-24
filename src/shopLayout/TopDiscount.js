@@ -43,7 +43,7 @@ const TopDiscount = ({rowID}) => {
             <div id={'slider' + rowID} className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative'>
               {products?.map(product =>
                 <Link key={product._id} to={`/products/${product._id}`}>
-                  <div className='hover:scale-105 ease-in duration-300 inline-block p-2 py-8'>
+                  <div className='lg:hover:scale-105 ease-in duration-300 inline-block p-2 py-8'>
                     <img src={product.images[0]} alt={product.id} width={250} className='rounded-md'/>
                     <div className='flex items-start justify-between py-2'>
                       <div className='font-bold text-sm'>{product.brand.toUpperCase()}</div> 
