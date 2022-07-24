@@ -5,8 +5,7 @@ import {Link} from 'react-router-dom'
 import FadeLoader from "react-spinners/FadeLoader";
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../slices/cartSlice';
-// import { addItem, delItem } from '../redux/action/index';
-// import { actionType } from '../redux/reducer/handleCart';
+
 
 const ProductPage = (rowID) => {
     const [product, setProduct] = useState([])
@@ -33,6 +32,8 @@ const ProductPage = (rowID) => {
         getProduct();
     }, [url]);
 
+    const [imgIndex, setImgIndex] = useState(0)
+
     const Loading = () => {
         return (
             <div className='flex items-center justify-center'>
@@ -45,18 +46,18 @@ const ProductPage = (rowID) => {
     const ShowProduct = () => {
         return (
             <div>
-               <div className='grid lg:grid-cols-2 gap-8 p-4'>
+               <div className='grid md:grid-cols-2 gap-8 p-4'>
                     <div>
                         <div className='flex items-center justify-center'>
-                            <img src={product.images?.[0]} alt={product._id} width={300} id='mainImg' className='rounded-md hover:scale-105 ease-in duration-300 max-w-full h-auto' />
+                        <img src={product.images?.[imgIndex]} alt="" width={300} className='rounded-md hover:scale-105 ease-in duration-300 max-w-full h-auto' />
                         </div>
 
                         <div id={'slider' + rowID} className='w-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide relative'>
                             <div className='flex items-center h-full w-full py-4 relative'>
-                                <img src={product.images?.[1]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />
-                                <img src={product.images?.[2]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />
-                                <img src={product.images?.[3]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />
-                                <img src={product.images?.[4]} width={130} alt={product._id} className='rounded-md px-1 hover:scale-105 ease-in duration-300 small-img'  />  
+                                <img src={product.images?.[0]} width={130} alt={product._id} onClick={() => setImgIndex(0)} className='rounded-md px-1 hover:scale-105 ease-in duration-300 cursor-pointer'  />
+                                <img src={product.images?.[1]} width={130} alt={product._id} onClick={() => setImgIndex(1)} className='rounded-md px-1 hover:scale-105 ease-in duration-300 cursor-pointer'  />
+                                <img src={product.images?.[2]} width={130} alt={product._id} onClick={() => setImgIndex(2)}  className='rounded-md px-1 hover:scale-105 ease-in duration-300 cursor-pointer'  />
+                                <img src={product.images?.[3]} width={130} alt={product._id} onClick={() => setImgIndex(3)} className='rounded-md px-1 hover:scale-105 ease-in duration-300 cursor-pointer'  />  
                             </div>    
                         </div>
                     </div>
@@ -74,19 +75,11 @@ const ProductPage = (rowID) => {
                         
                         <div className='flex items-center'>
                             <div>
-                                <select className='my-3 border border-[#986c55] p-2 rounded-md '>
-                                    <option>Select Size</option>
-                                    <option>XL</option>
-                                    <option>XXl</option>
-                                    <option>Large</option>
-                                    <option>Medium</option>
-                                    <option>Small</option>
-                                </select>  
+                                <div className='bg-button text-btnText dark:text-white px-9 py-2 rounded-md shadow-md hover:shadow-xl cursor-pointer' onClick={() => handleAddToCart(product)}>Add to Cart</div>
                             </div>
-                            
-                            <div>
-                                <div className='bg-button text-btnText dark:text-white px-5 py-2 rounded-md shadow-md hover:shadow-xl cursor-pointer ml-5' onClick={() => handleAddToCart(product)}>Add to Cart</div>
-                            </div>
+                            {/* <div>
+                                <div className='border border-[#986c55] text-black dark:text-white px-5 py-2 rounded-md shadow-md hover:shadow-xl cursor-pointer hover:bg-button ml-5'>Save to wishlist</div>
+                            </div> */}
                         </div>
 
                         <div>

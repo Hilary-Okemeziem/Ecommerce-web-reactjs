@@ -7,6 +7,8 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import ProductPage from "./components/ProductPage";
 import ShopPage from "./components/ShopPage";
+import NotFound from "./components/NotFound";
+import Checkout from "./components/Checkout";
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path='/register' element={<Register/>}/>
         <Route path='/products/:productId' element={<ProductPage/>}/>
         <Route path='/shoppage' element={<ShopPage/>}/>
+        <Route path='/checkout' element={<Checkout/>}/>
+        <Route path='*' element={<NotFound/>}/>
       </Routes> 
     </>
   );

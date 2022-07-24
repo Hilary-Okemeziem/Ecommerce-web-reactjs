@@ -12,7 +12,7 @@ import {HiArrowNarrowRight} from 'react-icons/hi'
 
 const Category = () => {
   return (
-    <div className='w-full py-16 p-2'>
+    <div className='w-full py-16 p-4'>
         <div className='flex items-center justify-center pt-8'>
             <h1 className='text-[#644726] text-3xl font-bold heading'>Shop By Category</h1>
         </div>
@@ -21,7 +21,7 @@ const Category = () => {
             <Link to='/shoppage' className='underline group flex items-end justify-end cursor-pointer'>View all<span className='group-hover:rotate-90 duration-300'><HiArrowNarrowRight className='inline'/></span></Link>
         </div>
 
-        <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-8 pt-[1rem]'>
+        <div className='grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-[1rem]'>
             <div className='p-6 shadow-md shadow-gray-300 bg-[#f5f5f5] dark:shadow-black dark:bg-[#0e0e10] rounded-xl hover:scale-105 ease-in duration-300'>
                 <div className='grid grid-cols-2 gap-4 justify-center items-center cursor-pointer'>
                     <div className='mx-auto'>

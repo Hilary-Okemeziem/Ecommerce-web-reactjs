@@ -19,7 +19,7 @@ const Hero = () => {
                     <img src={hero} alt="/" />
                 </div>
             </div>
-            <div className='rounded-full w-[430px] h-[430px] bg-[#ffffff] absolute top-0 right-[90px] hidden lg:block'></div>
+            <div className='rounded-full w-[422px] h-[422px] bg-[#ffffff] absolute top-0 right-[90px] hidden lg:block'></div>
             <div className='rounded-full w-[70px] h-[70px] bg-[#ffffff] absolute top-0 right-[550px] hidden lg:block'></div>   
         </div>
 

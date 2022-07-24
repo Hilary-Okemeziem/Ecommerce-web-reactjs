@@ -9,14 +9,19 @@ import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import cartReducer, { getTotals } from './slices/cartSlice';
 import { ThemeProvider } from './context/ThemeContext';
+import authReducer, { loadUser } from './slices/authSlice';
+import cartUiSlice from './slices/cartUiSlice';
 
 const store = configureStore({
   reducer:{
     cart: cartReducer,
+    auth: authReducer,
+    cartUi: cartUiSlice.reducer,
   }
 });
 
 store.dispatch(getTotals());
+store.dispatch(loadUser(null));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

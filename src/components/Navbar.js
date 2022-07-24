@@ -1,5 +1,5 @@
-import React, { useState,  Fragment } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState,  Fragment, useEffect } from 'react'
+import {Link, useNavigate} from 'react-router-dom'
 import { AiOutlineClose, AiOutlineMenu, AiOutlineInstagram } from 'react-icons/ai';
 import ThemeToggle from './ThemeToggle';
 import {HiShoppingCart, HiSearch, HiUser, HiChevronDown} from 'react-icons/hi'
@@ -10,6 +10,14 @@ import {GoSignIn} from 'react-icons/go'
 import logo from '../images/kcl.png'
 import CartPage from './CartPage';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import { getTotals } from '../slices/cartSlice'
+import { logoutUser } from '../slices/authSlice';
+import { toast } from 'react-toastify';
+import {ImUserCheck} from 'react-icons/im'
+import {GoSignOut} from 'react-icons/go'
+import {RiCoupon3Fill} from 'react-icons/ri'
+import { cartUiActions } from '../slices/cartUiSlice';
 
 
 
@@ -17,7 +25,16 @@ const Navbar = () => {
     const [nav, setNav] = useState(false);
     const [navBg, setNavBg] = useState(false);
     const [carts, setCarts] = useState(false);
+
     const { cartTotalQuantity } = useSelector((state) => state.cart);
+    const auth = useSelector((state) => state.auth);
+    const cart = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        dispatch(getTotals());
+    }, [cart, dispatch]);
 
     const handleNav = () => {
         setNav(!nav);
@@ -26,6 +43,12 @@ const Navbar = () => {
     const handleCart = () => {
         setCarts(!carts);
     };
+
+    const toggleCart = () => {
+        dispatch(cartUiActions.toggle());
+    };
+
+    const showCart = useSelector(state => state.cartUi.cartIsVisible);
 
     const changeNavbg = () => {
         if (window.scrollY >= 90) {
@@ -51,7 +74,7 @@ const Navbar = () => {
 
         <div className='hidden xl:flex'>
             <form className='relative'>
-                <input className='bg-primary border border-input px-11 py-2 w-[35rem] shadow-lg rounded-lg' type="text" placeholder='Search products, brands and categories...' />
+                <input className='bg-primary border border-input px-11 py-2 w-[33rem] shadow-lg rounded-lg' type="text" placeholder='Search products, brands and categories...' />
                 <HiSearch className='absolute left-3 top-3 text-gray-400' size={20}/>
             </form>
             <div className='bg-button text-btnText dark:text-white px-5 py-2 ml-2 rounded-lg shadow-lg hover:shadow-2xl flex items-center justify-between cursor-pointer'>Search</div>
@@ -59,101 +82,176 @@ const Navbar = () => {
 
         <div>
             <ul className='hidden md:flex'>
-                {/* <Link to='/login'>
-                    <li className='ml-10 hover:font-bold'>
-                        Login
-                    </li>
-                </Link>
-                <Link to='/register'>
-                    <li className='ml-10 hover:font-bold'>
-                        Register
-                    </li>
-                </Link> */}
-
                 <div className='flex items-center justify-between'>
-                    <p> <HiUser className='inline mb-2' size={22}/> Account</p>
-                    <div>
-                        <Menu as='div' className='relative text-left'>
-                            <div className='flex'>
-                                <Menu.Button>
-                                    <HiChevronDown size={20} />
-                                </Menu.Button>
+                    {auth._id && auth.first_name ? 
+                        (
+                        <div className='flex items-center justify-between'>
+                            <p><ImUserCheck className='inline mr-1' size={22}/> Hi, {auth.first_name}!</p>
+                            <div>
+                                <Menu as='div' className='relative text-left ml-1'>
+                                    <div className='flex'>
+                                        <Menu.Button>
+                                            <HiChevronDown size={20} />
+                                        </Menu.Button>
+                                    </div>
+
+                                    <Transition
+                                        as={Fragment}
+                                        enter='transition ease-out duration-100'
+                                        enterFrom='transform opacity-0 scale-95'
+                                        enterTo='transform opacity-100 scale-100'
+                                        leave='transition ease-in duration-75'
+                                        leaveFrom='transform opacity-100 scale-100'
+                                        leaveTo='transform opacity-0 scale-95'
+                                    >
+                                        <Menu.Items className='origin-top-right absolute right-[-5rem] mt-4 w-56 divide-y divide-gray-100 rounded-md bg-[#F5F5F5] dark:bg-[#121212] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                                            <div className='py-1'>
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                    <a
+                                                        href='/'
+                                                        className={(
+                                                        active
+                                                            ? 'bg-gray-500 text-gray-100'
+                                                            : 'text-gray-200',
+                                                        'block px-4 py-2 text-center'
+                                                        )}
+                                                    >
+                                                        Saved Items <FaRegHeart className='inline ml-4'/>
+                                                    </a>
+                                                    )}
+                                                </Menu.Item>
+
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                    <p  className={(
+                                                        active
+                                                            ? 'bg-gray-500 text-gray-100'
+                                                            : 'text-gray-200',
+                                                        'block px-4 py-2 text-primary border-b text-center cursor-pointer'
+                                                        )}
+                                                    >
+                                                        Apply Coupon <RiCoupon3Fill className='inline ml-4'/>      
+                                                    </p>
+                                                    )}
+                                                </Menu.Item>
+
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                    <p  className={(
+                                                        active
+                                                            ? 'bg-gray-500 text-gray-100'
+                                                            : 'text-gray-200',
+                                                        'block px-4 py-2 text-primary text-center cursor-pointer'
+                                                        )} onClick={() => {
+                                                            dispatch(logoutUser(null))
+                                                            toast.warning('Logged out!', {position: 'bottom-left'})
+                                                            navigate('/login')
+                                                        }}
+                                                    >
+                                                        Logout <GoSignOut className='inline ml-4'/>      
+                                                    </p>
+                                                    )}
+                                                </Menu.Item>
+                                            </div>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
                             </div>
 
-                            <Transition
-                                as={Fragment}
-                                enter='transition ease-out duration-100'
-                                enterFrom='transform opacity-0 scale-95'
-                                enterTo='transform opacity-100 scale-100'
-                                leave='transition ease-in duration-75'
-                                leaveFrom='transform opacity-100 scale-100'
-                                leaveTo='transform opacity-0 scale-95'
-                            >
-                                <Menu.Items className='origin-top-right absolute right-[-5rem] mt-4 w-56 divide-y divide-gray-100 rounded-md bg-[#F5F5F5] dark:bg-[#121212] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                                    <div className='py-1'>
-                                        <Menu.Item>
-                                            {({ active }) => (
-                                            <Link
-                                                to='/login'
-                                                className={(
-                                                active
-                                                    ? 'bg-gray-500 text-gray-100'
-                                                    : 'text-gray-200',
-                                                'block px-4 py-2 text-primary border-b text-center'
-                                                )}
-                                            >
-                                                Login <GoSignIn className='inline ml-4'/>
-                                            </Link>
-                                            )}
-                                        </Menu.Item>
-                                        <Menu.Item>
-                                            {({ active }) => (
-                                            <Link
-                                                to='/register'
-                                                className={(
-                                                active
-                                                    ? 'bg-gray-500 text-gray-100'
-                                                    : 'text-gray-200',
-                                                'block px-4 py-2 text-primary text-center border-b'
-                                                )}
-                                            >
-                                                Create Account <SiGnuprivacyguard className='inline ml-4'/>
-                                            </Link>
-                                            )}
-                                        </Menu.Item>
-                                        <Menu.Item>
-                                            {({ active }) => (
-                                            <a
-                                                href='/'
-                                                className={(
-                                                active
-                                                    ? 'bg-gray-500 text-gray-100'
-                                                    : 'text-gray-200',
-                                                'block px-4 py-2 text-center'
-                                                )}
-                                            >
-                                                Saved Items <FaRegHeart className='inline ml-4'/>
-                                            </a>
-                                            )}
-                                        </Menu.Item>
+                        </div>
+                        ) 
+                        : 
+                        (
+                        <div className='flex items-center justify-between'>
+                            <p> <HiUser className='inline mb-1' size={22}/> Account</p>
+                            <div>
+                                <Menu as='div' className='relative text-left'>
+                                    <div className='flex'>
+                                        <Menu.Button>
+                                            <HiChevronDown size={20} />
+                                        </Menu.Button>
                                     </div>
-                                </Menu.Items>
-                            </Transition>
-                        </Menu>
-                    </div>
+
+                                    <Transition
+                                        as={Fragment}
+                                        enter='transition ease-out duration-100'
+                                        enterFrom='transform opacity-0 scale-95'
+                                        enterTo='transform opacity-100 scale-100'
+                                        leave='transition ease-in duration-75'
+                                        leaveFrom='transform opacity-100 scale-100'
+                                        leaveTo='transform opacity-0 scale-95'
+                                    >
+                                        <Menu.Items className='origin-top-right absolute right-[-5rem] mt-4 w-56 divide-y divide-gray-100 rounded-md bg-[#F5F5F5] dark:bg-[#121212] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+                                            <div className='py-1'>
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                    <Link
+                                                        to='/login'
+                                                        className={(
+                                                        active
+                                                            ? 'bg-gray-500 text-gray-100'
+                                                            : 'text-gray-200',
+                                                        'block px-4 py-2 text-primary border-b text-center'
+                                                        )}
+                                                    >
+                                                        Login <GoSignIn className='inline ml-4'/>
+
+                                                        
+                                                    </Link>
+                                                    )}
+                                                </Menu.Item>
+
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                    <Link
+                                                        to='/register'
+                                                        className={(
+                                                        active
+                                                            ? 'bg-gray-500 text-gray-100'
+                                                            : 'text-gray-200',
+                                                        'block px-4 py-2 text-primary text-center border-b'
+                                                        )}
+                                                    >
+                                                        Create Account <SiGnuprivacyguard className='inline ml-4'/>
+                                                    </Link>
+                                                    )}
+                                                </Menu.Item>    
+                
+                                                <Menu.Item>
+                                                    {({ active }) => (
+                                                    <a
+                                                        href='/'
+                                                        className={(
+                                                        active
+                                                            ? 'bg-gray-500 text-gray-100'
+                                                            : 'text-gray-200',
+                                                        'block px-4 py-2 text-center'
+                                                        )}
+                                                    >
+                                                        Saved Items <FaRegHeart className='inline ml-4'/>
+                                                    </a>
+                                                    )}
+                                                </Menu.Item>
+                                            </div>
+                                        </Menu.Items>
+                                    </Transition>
+                                </Menu>
+                            </div>
+                        </div>
+                        )
+                    }
+                    
                 </div>
 
                 
-                    <li className='ml-10 mt-2 hover:font-bold cursor-pointer relative' onClick={handleCart}>
+                    <li className='ml-10 mt-2 hover:font-bold cursor-pointer relative' onClick={toggleCart}>
                         <HiShoppingCart className='inline mb-2' size={22} />  Cart
-                        <div className='absolute -top-3 left-4 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'>
-                            <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p>
+                        {cartTotalQuantity > 0 ? (
+                            <div className='absolute -top-3 left-4 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'>
+                                <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p>
                         </div>  
-                        {/* {cartTotalQuantity > 0 ? ( */}
-                            {/* <div className='absolute -top-3 left-4 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'> */}
-                            {/* <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p> */}
-                        {/* </div>  
-                        ): ''} */}
+                        ): ''}
                     </li>
                 <li className='ml-10 mt-1'>
                     <ThemeToggle/>
@@ -162,11 +260,13 @@ const Navbar = () => {
 
             <div className='flex items-center justify-evenly'>
                 {/* Cart icon */}
-                <div className='md:hidden z-9 relative' onClick={handleCart}>
+                <div className='md:hidden z-9 relative' onClick={toggleCart}>
                     <HiShoppingCart size={22}/>
-                    <div className='absolute -top-3 -right-3 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'>
-                        <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p>
-                    </div>
+                    {cartTotalQuantity > 0 ? (
+                        <div className='absolute -top-3 left-4 w-5 h-5 rounded-full bg-[#986c55] flex items-center justify-center'>
+                            <p className='text-xs text-white font-semibold'>{cartTotalQuantity}</p>
+                        </div>  
+                    ): ''}
                 </div>
                 {/* Hamburger Icon */}
                 <div
@@ -210,31 +310,67 @@ const Navbar = () => {
                     </div>
 
                     <div className='py-2 flex flex-col'>
-                        <ul className='uppercase'>
-                            <Link to='/' >
-                                <li className='py-4 text-sm' onClick={() => setNav(false)}>    
-                                    Home
-                                </li>
-                            </Link>
-                            <Link to='/login'>
-                                <li className='py-4 text-sm' onClick={() => setNav(false)}>
-                                    Login
-                                </li>
-                            </Link>
-                            <Link to='/register'>
-                                <li className='py-4 text-sm' onClick={() => setNav(false)}>
-                                    Sign Up
-                                </li>
-                            </Link>
-                            <Link to='/shoppage'>
-                                <li className='py-4 text-sm' onClick={() => setNav(false)}>
-                                    Shop
-                                </li>
-                            </Link>
-                            <li className='py-4 flex items-center'>
-                                <ThemeToggle/> <span className='ml-2'>Light/Dark Mode</span>
-                            </li>
-                        </ul>
+                        {auth._id && auth.first_name ?
+                        (
+                            <div>
+                                <p className='py-4 font-bold flex items-center'>
+                                    <HiUser className='inline mr-4' size={22}/>Hi, {auth.first_name}!
+                                </p>
+                                <ul className='uppercase'>    
+                                    <Link to='/' >
+                                        <li className='py-4 text-sm' onClick={() => setNav(false)}>    
+                                            Home
+                                        </li>
+                                    </Link>
+                                    <Link to='/shoppage'>
+                                        <li className='py-4 text-sm' onClick={() => setNav(false)}>
+                                            Shop
+                                        </li>
+                                    </Link>
+                                    <li className='py-4 text-sm'
+                                    onClick={() => {
+                                        dispatch(logoutUser(null))
+                                        toast.warning('Logged out!', {position: 'bottom-left'})
+                                        navigate('/login')
+                                    }} 
+                                    >
+                                        Logout
+                                    </li>
+                                    <li className='py-4 flex items-center'>
+                                        <ThemeToggle/> <span className='ml-2 text-sm'>Light/Dark Mode</span>
+                                    </li>
+                                </ul>   
+                            </div>       
+                        ) : 
+                        (
+                            <div>
+                                <ul className='uppercase'>    
+                                    <Link to='/' >
+                                        <li className='py-4 text-sm' onClick={() => setNav(false)}>    
+                                            Home
+                                        </li>
+                                    </Link>
+                                    <Link to='/shoppage'>
+                                        <li className='py-4 text-sm' onClick={() => setNav(false)}>
+                                            Shop
+                                        </li>
+                                    </Link>
+                                    <Link to='/login'>
+                                        <li className='py-4 text-sm' onClick={() => setNav(false)}>
+                                            <GoSignIn className='inline mr-4'/>Login
+                                        </li>
+                                    </Link>
+                                    <Link to='/register'>
+                                        <li className='py-4 text-sm' onClick={() => setNav(false)}>
+                                            <SiGnuprivacyguard className='inline mr-4'/>Create Account
+                                        </li>
+                                    </Link>
+                                    <li className='py-4 flex items-center'>
+                                        <ThemeToggle/> <span className='ml-2 text-sm'>Light/Dark Mode</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        )}    
                     </div>
 
                     <div>
@@ -272,9 +408,7 @@ const Navbar = () => {
             </div>
         </div>
 
-        <div>
-            {carts ? <CartPage/> : ''}   
-        </div>       
+        {showCart && <CartPage/>}       
     </div>
   )
 }
