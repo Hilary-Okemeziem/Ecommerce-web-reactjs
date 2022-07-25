@@ -23,6 +23,7 @@ const Banner = () => {
         </div>
         
         <div className='relative md:hidden'>
+            <div className='absolute w-full h-full bg-black/25'></div>
             <img src={festival} alt="/" className='w-full h-[60vh] object-cover'/>
 
             <div className='flex items-center justify-between flex-wrap max-w-[1240px] m-auto p-2 absolute top-0 left-0 w-full h-full'>

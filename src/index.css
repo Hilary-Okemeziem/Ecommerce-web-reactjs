@@ -55,32 +55,8 @@
   content: "";
 }
 
-.banner{
-  background-attachment: fixed;
-  background-position: top 70px center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.advert-img{
   background-image: url('./images/beach.png');
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  height: 60vh;
-}
-
-.banner2{
-  background-attachment: fixed;
-  background-position: top 70px center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-image: url('./images/festival.png');
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  height: 60vh;
 }
 
 .banner-img{
