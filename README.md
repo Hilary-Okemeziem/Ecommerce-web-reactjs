@@ -7,7 +7,7 @@ I made use of the backend API for fetching all of the product data and for user 
 The backend was built by a friend of mine using django rest framework and mongo database.
 Link to the backend repo: https://github.com/KeneNwogu/store
 
-I made use of redux toolkit for all state management of the website which includes adding products to cart, deleting product from cart and clearing cart.
+I made use of redux toolkit for all state management of the website which includes adding products to cart, deleting product from cart, clearing cart and cart checkout.
 The project also has an in-built light/dark theme mode which I did using Context API and CSS.
 
 I also made use of paystack for payment integration
