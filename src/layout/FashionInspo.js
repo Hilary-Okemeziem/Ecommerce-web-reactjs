@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom'
 const FashionInspo = ({rowID}) => {
     const [products, setProducts] = useState([])
 
-    const url = 'https://thegorana.herokuapp.com/products/'
+    const url = "https://gorana.onrender.com/products/";
   
     useEffect(() => {
       axios.get(url).then((response) => {

@@ -18,7 +18,7 @@ const ProductPage = (rowID) => {
         dispatch(addToCart(product))
     }
 
-    const url =  `https://thegorana.herokuapp.com/products/${productId}`
+    const url = `https://gorana.onrender.com/products/${productId}`;
   
     useEffect(() => {
         const getProduct = async () => {

@@ -54,7 +54,7 @@ const FlashSale = ({rowID}) => {
 
   const [products, setProducts] = useState([])
 
-  const url = 'https://thegorana.herokuapp.com/products/?page=7'
+  const url = "https://gorana.onrender.com/products/?page=2";
 
   useEffect(() => {
     axios.get(url).then((response) => {

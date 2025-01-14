@@ -74,7 +74,7 @@ const Navbar = () => {
 
         <div className='hidden xl:flex'>
             <form className='relative'>
-                <input className='bg-primary border border-input px-11 py-2 w-[33rem] shadow-lg rounded-lg' type="text" placeholder='Search products, brands and categories...' />
+                <input className='bg-primary border border-input px-11 py-2 w-[30rem] shadow-lg rounded-lg' type="text" placeholder='Search products, brands and categories...' />
                 <HiSearch className='absolute left-3 top-3 text-gray-400' size={20}/>
             </form>
             <div className='bg-button text-btnText dark:text-white px-5 py-2 ml-2 rounded-lg shadow-lg hover:shadow-2xl flex items-center justify-between cursor-pointer'>Search</div>

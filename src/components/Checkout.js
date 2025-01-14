@@ -102,33 +102,35 @@ const Checkout = () => {
         setErrors(validate(user));
         setIsSubmit(true);
         try{
-            await axios.post('https://thegorana.herokuapp.com/orders/', 
-            {
-                orders: cart.cartItems.map((cartItem) => {
+            await axios
+              .post(
+                "https://gorana.onrender.com/orders/",
+                {
+                  orders: cart.cartItems.map((cartItem) => {
                     return {
-                        product_id: cartItem._id,
-                        quantity: cartItem.cartQuantity,
-                        size: cartItem.brand,
+                      product_id: cartItem._id,
+                      quantity: cartItem.cartQuantity,
+                      size: cartItem.brand,
                     };
-                }),
-                state: user.state,
-                address: user.address    
-            },
-            {
-                headers: {
-                    Authorization: `${auth.token}`,
+                  }),
+                  state: user.state,
+                  address: user.address,
                 },
-            },
-            setLoading(true)
-            )
-            .then((response) => {
+                {
+                  headers: {
+                    Authorization: `${auth.token}`,
+                  },
+                },
+                setLoading(true)
+              )
+              .then((response) => {
                 console.log(response.data);
-                if (response.data.success){
-                    setIsOpen(true);
-                    setLoading(false)
-                } 
-                setModal(response.data)
-            })
+                if (response.data.success) {
+                  setIsOpen(true);
+                  setLoading(false);
+                }
+                setModal(response.data);
+              });
         }
         catch(error) {
             console.log(error.response.data);

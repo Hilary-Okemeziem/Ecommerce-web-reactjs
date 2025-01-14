@@ -1,1 +1,1 @@
-export const url = 'https://thegorana.herokuapp.com/users'
+export const url = "https://gorana.onrender.com/users";
